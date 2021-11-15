@@ -175,6 +175,7 @@ const SignupPage = () => {
                         id='password'
                         name='password'
                         type='password'
+                        minLength={6}
                         autoComplete='current-password'
                         required={true}
                         onChange={(e) => setPassword(e.target.value)}
@@ -195,6 +196,7 @@ const SignupPage = () => {
                         id='confirmpassword'
                         name='confirmpassword'
                         type='password'
+                        minLength={6}
                         autoComplete='current-password'
                         required={true}
                         onChange={(e) => setConfirmPassword(e.target.value)}

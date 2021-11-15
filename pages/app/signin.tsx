@@ -22,7 +22,7 @@ import { useRedirectProvider } from '../../providers/RedirectProvider';
   }
   ```
 */
-const SignupPage = () => {
+const SigninPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string[]>([]);
@@ -213,4 +213,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default SigninPage;

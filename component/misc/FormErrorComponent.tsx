@@ -4,9 +4,13 @@ import { XCircleIcon } from '@heroicons/react/solid';
 
 interface FormErrorComponentParamsType {
   error: string[];
+  [key: string]: any;
 }
 
-const FormErrorComponent = ({ error }: FormErrorComponentParamsType) => {
+const FormErrorComponent = ({
+  error,
+  ...modifiers
+}: FormErrorComponentParamsType) => {
   return (
     <Transition
       show={error !== null && error.length > 0}
@@ -17,7 +21,7 @@ const FormErrorComponent = ({ error }: FormErrorComponentParamsType) => {
       leaveFrom='opacity-100 translate-y-0'
       leaveTo='opacity-0 -translate-y-1'
     >
-      <div className='rounded-md bg-red-50 p-4'>
+      <div className='rounded-md bg-red-50 p-4' {...modifiers}>
         <div className='flex'>
           <div className='flex-shrink-0'>
             <XCircleIcon className='h-5 w-5 text-red-400' aria-hidden='true' />
@@ -29,7 +33,7 @@ const FormErrorComponent = ({ error }: FormErrorComponentParamsType) => {
             <div className='mt-2 text-sm text-red-700'>
               <ul role='list' className='list-disc pl-5 space-y-1'>
                 {error.map((error) => (
-                  <li>{error}</li>
+                  <li key={error}>{error}</li>
                 ))}
               </ul>
             </div>

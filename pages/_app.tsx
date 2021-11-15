@@ -7,6 +7,9 @@ import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
 import AuthProvider from '../providers/AuthProvider';
 import UserProvider from '../providers/UserProvider';
+import SharedStateProvider from '../providers/SharedStateProvider';
+import FirestoreProvider from '../providers/FirestoreProvider';
+import MasterHandler from '../handler/MasterHandler';
 
 const App = ({ Component, pageProps }) => {
   return (
@@ -18,9 +21,15 @@ const App = ({ Component, pageProps }) => {
       <RedirectProvider>
         <FirebaseProvider>
           <AuthProvider>
-            <UserProvider>
-              <Component {...pageProps} />
-            </UserProvider>
+            <FirestoreProvider>
+              <UserProvider>
+                <SharedStateProvider>
+                  <MasterHandler>
+                    <Component {...pageProps} />
+                  </MasterHandler>
+                </SharedStateProvider>
+              </UserProvider>
+            </FirestoreProvider>
           </AuthProvider>
         </FirebaseProvider>
       </RedirectProvider>
