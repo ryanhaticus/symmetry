@@ -1,11 +1,27 @@
-import { createContext, useContext } from 'react';
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import { useFirestoreProvider } from '../providers/FirestoreProvider';
-import { setDoc, doc } from 'firebase/firestore';
 import { useRedirectProvider } from '../providers/RedirectProvider';
 import { useUserProvider } from '../providers/UserProvider';
 
+interface ProjectType {
+  id: string;
+  owner: string;
+  name: string;
+  sources: any[];
+}
+
 interface ProjectHandlerContextType {
   newProject: (name: string) => Promise<void>;
+  projects: ProjectType[];
+  setActiveProject: Dispatch<SetStateAction<string>>;
+  activeProject: ProjectType;
 }
 
 const ProjectHandlerContext = createContext<ProjectHandlerContextType>(null);
@@ -20,13 +36,37 @@ const generateId = (): string => {
 };
 
 const ProjectHandler = ({ children }) => {
-  const firestoreProvider = useFirestoreProvider();
+  const { setDoc, getDocs } = useFirestoreProvider();
   const { redirect } = useRedirectProvider();
   const { user } = useUserProvider();
+  const [projects, setProjects] = useState<ProjectType[]>([]);
+  const [dummyActiveProject, setActiveProject] = useState<string>(null);
+  const [activeProject, setDummyActiveProject] = useState<ProjectType>(null);
+  useEffect(() => {
+    if (user == null) {
+      return;
+    }
+    (async () => {
+      const projectDocs = await getDocs('projects', 'owner', '==', user.uid);
+      setProjects(
+        projectDocs.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            ...data
+          };
+        }) as unknown as ProjectType[]
+      );
+    })();
+  }, null);
+  useEffect(() => {
+    setDummyActiveProject(
+      projects.find((project) => project.id === dummyActiveProject)
+    );
+  }, [dummyActiveProject]);
   const newProject = async (name: string) => {
     const id = generateId();
-
-    await setDoc(doc(firestoreProvider, 'projects', id), {
+    setDoc(`projects/${id}`, {
+      id,
       owner: user.uid,
       name,
       sources: []
@@ -34,7 +74,9 @@ const ProjectHandler = ({ children }) => {
     await redirect(`/app/project/${id}`);
   };
   return (
-    <ProjectHandlerContext.Provider value={{ newProject }}>
+    <ProjectHandlerContext.Provider
+      value={{ newProject, projects, setActiveProject, activeProject }}
+    >
       {children}
     </ProjectHandlerContext.Provider>
   );

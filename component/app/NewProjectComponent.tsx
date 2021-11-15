@@ -1,9 +1,8 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { PlusIcon } from '@heroicons/react/solid';
 
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { CheckIcon } from '@heroicons/react/outline';
 import { useSharedStateProvider } from '../../providers/SharedStateProvider';
 import FormErrorComponent from '../misc/FormErrorComponent';
 import { useProjectHandler } from '../../handler/ProjectHandler';
@@ -14,6 +13,7 @@ const NewProjectComponent = () => {
   const [name, setName] = useState('');
   const [error, setError] = useState([]);
   const { newProject } = useProjectHandler();
+
   const _newProject = async () => {
     try {
       await newProject(name);

@@ -16,9 +16,9 @@
 */
 import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Menu, Transition } from '@headlessui/react';
+import Link from 'next/link';
 import {
   ClockIcon,
-  HomeIcon,
   MenuAlt1Icon,
   ViewListIcon,
   XIcon
@@ -31,7 +31,7 @@ import LoadingComponent from '../misc/LoadingComponent';
 import { useRedirectProvider } from '../../providers/RedirectProvider';
 
 const navigation = [
-  { name: 'My projects', href: '#', icon: ViewListIcon, current: true },
+  { name: 'My projects', href: '/app', icon: ViewListIcon, current: false },
   { name: 'Recent', href: '#', icon: ClockIcon, current: false }
 ];
 
@@ -126,28 +126,28 @@ const RootAppComponent = ({ title, children }: RootAppComponentParamsType) => {
                   <nav className='px-2'>
                     <div className='space-y-1'>
                       {navigation.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className={classNames(
-                            item.current
-                              ? 'bg-gray-100 text-gray-900'
-                              : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
-                            'group flex items-center px-2 py-2 text-base leading-5 font-medium rounded-md'
-                          )}
-                          aria-current={item.current ? 'page' : undefined}
-                        >
-                          <item.icon
+                        <Link key={item.name} href={item.href}>
+                          <a
                             className={classNames(
                               item.current
-                                ? 'text-gray-500'
-                                : 'text-gray-400 group-hover:text-gray-500',
-                              'mr-3 flex-shrink-0 h-6 w-6'
+                                ? 'bg-gray-100 text-gray-900'
+                                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
+                              'group flex items-center px-2 py-2 text-base leading-5 font-medium rounded-md'
                             )}
-                            aria-hidden='true'
-                          />
-                          {item.name}
-                        </a>
+                            aria-current={item.current ? 'page' : undefined}
+                          >
+                            <item.icon
+                              className={classNames(
+                                item.current
+                                  ? 'text-gray-500'
+                                  : 'text-gray-400 group-hover:text-gray-500',
+                                'mr-3 flex-shrink-0 h-6 w-6'
+                              )}
+                              aria-hidden='true'
+                            />
+                            {item.name}
+                          </a>
+                        </Link>
                       ))}
                     </div>
                   </nav>
@@ -232,28 +232,28 @@ const RootAppComponent = ({ title, children }: RootAppComponentParamsType) => {
             <nav className='px-3 mt-6'>
               <div className='space-y-1'>
                 {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className={classNames(
-                      item.current
-                        ? 'bg-gray-200 text-gray-900'
-                        : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
-                      'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
-                    )}
-                    aria-current={item.current ? 'page' : undefined}
-                  >
-                    <item.icon
+                  <Link key={item.name} href={item.href}>
+                    <a
                       className={classNames(
                         item.current
-                          ? 'text-gray-500'
-                          : 'text-gray-400 group-hover:text-gray-500',
-                        'mr-3 flex-shrink-0 h-6 w-6'
+                          ? 'bg-gray-200 text-gray-900'
+                          : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
+                        'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                       )}
-                      aria-hidden='true'
-                    />
-                    {item.name}
-                  </a>
+                      aria-current={item.current ? 'page' : undefined}
+                    >
+                      <item.icon
+                        className={classNames(
+                          item.current
+                            ? 'text-gray-500'
+                            : 'text-gray-400 group-hover:text-gray-500',
+                          'mr-3 flex-shrink-0 h-6 w-6'
+                        )}
+                        aria-hidden='true'
+                      />
+                      {item.name}
+                    </a>
+                  </Link>
                 ))}
               </div>
             </nav>
@@ -337,7 +337,7 @@ const RootAppComponent = ({ title, children }: RootAppComponentParamsType) => {
               </div>
             </div>
           </div>
-          <main className='flex-1'>
+          <main>
             {/* Page title & actions */}
             <div className='border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8'>
               <div className='flex-1 min-w-0'>
@@ -357,7 +357,7 @@ const RootAppComponent = ({ title, children }: RootAppComponentParamsType) => {
               </div>
             </div>
           </main>
-          <div className='p-4 px-8 flex-grow'>{children}</div>
+          <div className='p-4 px-8 flex flex-col flex-grow'>{children}</div>
         </div>
       </div>
     </>

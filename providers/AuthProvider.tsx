@@ -11,7 +11,7 @@ const AuthProvider = ({ children }) => {
     const auth = getAuth();
     setAuth(auth);
   }, []);
-  if (auth === null) {
+  if (auth == null) {
     return <LoadingComponent fullscreen={true} />;
   }
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;

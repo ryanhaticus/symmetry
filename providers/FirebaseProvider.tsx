@@ -18,7 +18,7 @@ const FirebaseProvider = ({ children }) => {
     });
     setApp(app);
   }, []);
-  if (app === null) {
+  if (app == null) {
     return <LoadingComponent fullscreen={true} />;
   }
   return (
