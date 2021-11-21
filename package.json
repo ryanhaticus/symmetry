@@ -8,17 +8,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "chrome-aws-lambda": "^10.1.0",
     "firebase": "^9.4.1",
     "next": "12.0.3",
     "next-seo": "^4.28.1",
+    "puppeteer": "^11.0.0",
+    "puppeteer-core": "^11.0.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "user-agents": "^1.0.842"
   },
   "devDependencies": {
     "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^1.0.5",
     "@tailwindcss/forms": "^0.3.4",
     "@types/react": "^17.0.34",
+    "@types/user-agents": "^1.0.2",
     "autoprefixer": "^10.4.0",
     "eslint": "7",
     "eslint-config-next": "12.0.3",

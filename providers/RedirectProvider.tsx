@@ -5,6 +5,7 @@ interface RedirectContextType {
   redirect: (path: string) => void;
   route: string;
   projectId: string;
+  reload: () => void;
 }
 
 const RedirectContext = createContext<RedirectContextType>(null);
@@ -16,6 +17,9 @@ const RedirectProvider = ({ children }) => {
   const redirect = (path: string) => {
     router.push(path);
   };
+  const reload = () => {
+    router.reload();
+  };
   useEffect(() => {
     setRoute(router.asPath);
   }, [router.asPath]);
@@ -24,7 +28,7 @@ const RedirectProvider = ({ children }) => {
     setProjectId(id as string);
   }, [router.query]);
   return (
-    <RedirectContext.Provider value={{ redirect, route, projectId }}>
+    <RedirectContext.Provider value={{ redirect, route, projectId, reload }}>
       {children}
     </RedirectContext.Provider>
   );

@@ -70,7 +70,7 @@ const AppIndexPage = () => {
                 </div>
               </div>
             </div>
-            <div className='mt-2 sm:mt-4 flex-grow'>
+            <div className='flex flex-col flex-grow mt-2 sm:mt-4'>
               {tab == 'Search' && <SearchTabComponent />}
               {tab == 'Sources' && <>Sources</>}
             </div>

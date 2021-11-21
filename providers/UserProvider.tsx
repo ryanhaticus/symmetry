@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth';
 import { useAuthProvider } from './AuthProvider';
 import { useRedirectProvider } from './RedirectProvider';
+import LoadingComponent from '../component/misc/LoadingComponent';
 
 interface UserContextType {
   createUser: (email: string, password: string) => Promise<void>;
@@ -22,7 +23,8 @@ const UserContext = createContext<UserContextType>(null);
 
 const UserProvider = ({ children }) => {
   const authProvider = useAuthProvider();
-  const { redirect } = useRedirectProvider();
+  const { redirect, route } = useRedirectProvider();
+
   const createUser = async (email: string, password: string) => {
     await createUserWithEmailAndPassword(authProvider, email, password);
   };
@@ -38,11 +40,16 @@ const UserProvider = ({ children }) => {
     await signInWithEmailAndPassword(authProvider, email, password);
   };
   const [user, setUser] = useState<User>(null);
+  const [awaitingUser, setAwaitingUser] = useState(true);
   useEffect(() => {
     authProvider.onAuthStateChanged((user) => {
       setUser(user);
+      setAwaitingUser(false);
     });
   }, []);
+  if (awaitingUser) {
+    return <LoadingComponent fullscreen={true} />;
+  }
   return (
     <UserContext.Provider
       value={{

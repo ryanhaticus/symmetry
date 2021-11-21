@@ -23,7 +23,6 @@ const NewProjectComponent = ({ modalOnly }: NewProjectComponentParamsType) => {
       await newProject(name);
       setNewProjectModalOpen(false);
     } catch (e) {
-      console.log(e);
       setError([
         'Please ensure your project name is at least 6 characters long.'
       ]);

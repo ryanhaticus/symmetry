@@ -58,25 +58,28 @@ const ProjectHandler = ({ children }) => {
         }) as unknown as ProjectType[]
       );
     })();
-  }, null);
+  }, []);
   useEffect(() => {
     setDummyActiveProject(
       projects.find((project) => project.id === dummyActiveProject)
     );
-  }, [dummyActiveProject]);
+  }, [dummyActiveProject, projects]);
   const newProject = async (name: string) => {
     const id = generateId();
-    await setDoc(`projects/${id}`, {
+    const newProjectData = {
       id,
       owner: user.uid,
       name,
       sources: []
-    });
+    };
+    await setDoc(`projects/${id}`, newProjectData);
+    await setProjects([...projects, newProjectData]);
     await redirect(`/app/project/${id}`);
   };
   const deleteProject = async (id: string) => {
     await deleteDoc(`projects/${id}`);
-    await redirect('/app');
+    redirect('/app');
+    await setProjects(projects.filter((project) => project.id !== id));
   };
   return (
     <ProjectHandlerContext.Provider
