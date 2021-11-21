@@ -29,7 +29,7 @@ const AppIndexPage = () => {
       >
         {activeProject == null && <LoadingComponent fullscreen={false} />}
         {activeProject != null && (
-          <div>
+          <>
             <div>
               <div className='sm:hidden'>
                 <label htmlFor='tabs' className='sr-only'>
@@ -70,11 +70,11 @@ const AppIndexPage = () => {
                 </div>
               </div>
             </div>
-            <div className='mt-2 sm:mt-4'>
+            <div className='mt-2 sm:mt-4 flex-grow'>
               {tab == 'Search' && <SearchTabComponent />}
               {tab == 'Sources' && <>Sources</>}
             </div>
-          </div>
+          </>
         )}
       </RootAppComponent>
     </>

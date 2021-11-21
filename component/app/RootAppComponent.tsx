@@ -345,13 +345,13 @@ const RootAppComponent = ({ title, children }: RootAppComponentParamsType) => {
                 </h1>
               </div>
 
-              <div className='mt-4 flex sm:mt-0 sm:ml-4'>
+              <div className='flex gap-x-2'>
                 {route !== '/app' && (
                   <>
                     <button
                       type='button'
                       onClick={() => deleteProject(activeProject.id)}
-                      className='order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:order-1 sm:ml-3'
+                      className='order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:order-1'
                     >
                       <svg
                         className='w-6 h-6'
@@ -372,7 +372,7 @@ const RootAppComponent = ({ title, children }: RootAppComponentParamsType) => {
                     <Link href='/app'>
                       <button
                         type='button'
-                        className='order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:order-1 sm:ml-3'
+                        className='order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:order-1'
                       >
                         <svg
                           className='w-5 h-5'
@@ -399,7 +399,21 @@ const RootAppComponent = ({ title, children }: RootAppComponentParamsType) => {
                     onClick={() => setNewProjectModalOpen(true)}
                     className='order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:order-1 sm:ml-3'
                   >
-                    New project
+                    <svg
+                      className='w-6 h-6'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth='2'
+                        d='M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+                      ></path>
+                    </svg>
+                    <span className='pl-2 text-md'>New project</span>
                   </button>
                 )}
               </div>
