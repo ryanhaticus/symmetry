@@ -22,6 +22,7 @@ interface ProjectHandlerContextType {
   projects: ProjectType[];
   setActiveProject: Dispatch<SetStateAction<string>>;
   activeProject: ProjectType;
+  deleteProject: (id: string) => Promise<void>;
 }
 
 const ProjectHandlerContext = createContext<ProjectHandlerContextType>(null);
@@ -36,7 +37,7 @@ const generateId = (): string => {
 };
 
 const ProjectHandler = ({ children }) => {
-  const { setDoc, getDocs } = useFirestoreProvider();
+  const { setDoc, getDocs, deleteDoc } = useFirestoreProvider();
   const { redirect } = useRedirectProvider();
   const { user } = useUserProvider();
   const [projects, setProjects] = useState<ProjectType[]>([]);
@@ -65,7 +66,7 @@ const ProjectHandler = ({ children }) => {
   }, [dummyActiveProject]);
   const newProject = async (name: string) => {
     const id = generateId();
-    setDoc(`projects/${id}`, {
+    await setDoc(`projects/${id}`, {
       id,
       owner: user.uid,
       name,
@@ -73,9 +74,19 @@ const ProjectHandler = ({ children }) => {
     });
     await redirect(`/app/project/${id}`);
   };
+  const deleteProject = async (id: string) => {
+    await deleteDoc(`projects/${id}`);
+    await redirect('/app');
+  };
   return (
     <ProjectHandlerContext.Provider
-      value={{ newProject, projects, setActiveProject, activeProject }}
+      value={{
+        newProject,
+        projects,
+        setActiveProject,
+        activeProject,
+        deleteProject
+      }}
     >
       {children}
     </ProjectHandlerContext.Provider>

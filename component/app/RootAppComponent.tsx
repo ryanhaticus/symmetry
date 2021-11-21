@@ -29,15 +29,13 @@ import { useUserProvider } from '../../providers/UserProvider';
 import { useSharedStateProvider } from '../../providers/SharedStateProvider';
 import LoadingComponent from '../misc/LoadingComponent';
 import { useRedirectProvider } from '../../providers/RedirectProvider';
+import { classNames } from '../../helpers/CSS';
+import { useProjectHandler } from '../../handler/ProjectHandler';
 
 const navigation = [
   { name: 'My projects', href: '/app', icon: ViewListIcon, current: false },
   { name: 'Recent', href: '#', icon: ClockIcon, current: false }
 ];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
 
 interface RootAppComponentParamsType {
   title: string;
@@ -48,7 +46,8 @@ const RootAppComponent = ({ title, children }: RootAppComponentParamsType) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, signOut } = useUserProvider();
   const { setNewProjectModalOpen } = useSharedStateProvider();
-  const { redirect } = useRedirectProvider();
+  const { redirect, route } = useRedirectProvider();
+  const { deleteProject, activeProject } = useProjectHandler();
   useEffect(() => {
     if (user !== null) {
       return;
@@ -339,7 +338,7 @@ const RootAppComponent = ({ title, children }: RootAppComponentParamsType) => {
           </div>
           <main>
             {/* Page title & actions */}
-            <div className='border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8'>
+            <div className='border-b border-gray-200 px-4 py-4 flex items-center justify-between sm:px-6 lg:px-8'>
               <div className='flex-1 min-w-0'>
                 <h1 className='text-lg font-medium leading-6 text-gray-900 sm:truncate'>
                   {title}
@@ -347,17 +346,68 @@ const RootAppComponent = ({ title, children }: RootAppComponentParamsType) => {
               </div>
 
               <div className='mt-4 flex sm:mt-0 sm:ml-4'>
-                <button
-                  type='button'
-                  onClick={() => setNewProjectModalOpen(true)}
-                  className='order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:order-1 sm:ml-3'
-                >
-                  New project
-                </button>
+                {route !== '/app' && (
+                  <>
+                    <button
+                      type='button'
+                      onClick={() => deleteProject(activeProject.id)}
+                      className='order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:order-1 sm:ml-3'
+                    >
+                      <svg
+                        className='w-6 h-6'
+                        fill='none'
+                        stroke='currentColor'
+                        viewBox='0 0 24 24'
+                        xmlns='http://www.w3.org/2000/svg'
+                      >
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          strokeWidth={2}
+                          d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'
+                        ></path>
+                      </svg>
+                      <span className='pl-2 text-md'>Delete</span>
+                    </button>
+                    <Link href='/app'>
+                      <button
+                        type='button'
+                        className='order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:order-1 sm:ml-3'
+                      >
+                        <svg
+                          className='w-5 h-5'
+                          fill='none'
+                          stroke='currentColor'
+                          viewBox='0 0 24 24'
+                          xmlns='http://www.w3.org/2000/svg'
+                        >
+                          <path
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                            strokeWidth={2}
+                            d='M10 19l-7-7m0 0l7-7m-7 7h18'
+                          ></path>
+                        </svg>
+                        <span className='pl-2 text-md'>Back</span>
+                      </button>
+                    </Link>
+                  </>
+                )}
+                {!route.includes('/project/') && (
+                  <button
+                    type='button'
+                    onClick={() => setNewProjectModalOpen(true)}
+                    className='order-0 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:order-1 sm:ml-3'
+                  >
+                    New project
+                  </button>
+                )}
               </div>
             </div>
           </main>
-          <div className='p-4 px-8 flex flex-col flex-grow'>{children}</div>
+          <div className='p-4 px-4 sm:px-8 flex flex-col flex-grow'>
+            {children}
+          </div>
         </div>
       </div>
     </>

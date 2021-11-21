@@ -96,10 +96,6 @@ const recentPosts = [
   { id: 3, name: 'Improve your customer experience', href: '#' }
 ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
-
 const HeroComponent = () => {
   return (
     <div className='relative bg-gray-50'>
