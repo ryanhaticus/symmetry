@@ -1,5 +1,6 @@
 import { RadioGroup } from '@headlessui/react';
 import { useState } from 'react';
+import { useProjectHandler } from '../../../handler/ProjectHandler';
 import { useSearchProvider } from '../../../handler/SearchHandler';
 import { classNames } from '../../../helpers/CSS';
 import ContentBonesComponent from '../../misc/ContentBonesComponent';
@@ -32,6 +33,7 @@ const SearchTabComponent = () => {
     setTopicSearchTerm,
     setSearched
   } = useSearchProvider();
+  const { activeProject } = useProjectHandler();
   return (
     <>
       {searched.length == 0 && !searching && (
@@ -201,12 +203,12 @@ const SearchTabComponent = () => {
             <button
               type='button'
               onClick={() => setSearched([])}
-              className='w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+              className='inline-flex w-full justify-center items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
             >
               Search again
             </button>
           </div>
-          <div className='grid grid-cols-1 gap-y-2 sm:gap-4 sm:grid-cols-2'>
+          <div className='grid grid-cols-1 gap-y-2 md:gap-4 md:grid-cols-2'>
             {searched.map((search) => (
               <div
                 key={search.href}
@@ -222,6 +224,84 @@ const SearchTabComponent = () => {
                       {search.description}
                     </p>
                   </span>
+                  <div className='relative flex gap-x-2 mt-4'>
+                    <a href={search.href} target='_blank'>
+                      <button
+                        type='button'
+                        className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                      >
+                        <svg
+                          className='w-6 h-6'
+                          fill='none'
+                          stroke='currentColor'
+                          viewBox='0 0 24 24'
+                          xmlns='http://www.w3.org/2000/svg'
+                        >
+                          <path
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                            strokeWidth='2'
+                            d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
+                          ></path>
+                          <path
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                            stroke-width='2'
+                            d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
+                          ></path>
+                        </svg>
+                        <span className='pl-2'>View source</span>
+                      </button>
+                    </a>
+                    {activeProject.sources.find(
+                      (source) => source.href === search.href
+                    ) && (
+                      <button
+                        type='button'
+                        className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
+                      >
+                        <svg
+                          className='w-6 h-6'
+                          fill='none'
+                          stroke='currentColor'
+                          viewBox='0 0 24 24'
+                          xmlns='http://www.w3.org/2000/svg'
+                        >
+                          <path
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                            strokeWidth='2'
+                            d='M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z'
+                          ></path>
+                        </svg>
+                        <span className='pl-2'>Remove from project</span>
+                      </button>
+                    )}
+                    {activeProject.sources.find(
+                      (source) => source.href === search.href
+                    ) == null && (
+                      <button
+                        type='button'
+                        className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'
+                      >
+                        <svg
+                          className='w-6 h-6'
+                          fill='none'
+                          stroke='currentColor'
+                          viewBox='0 0 24 24'
+                          xmlns='http://www.w3.org/2000/svg'
+                        >
+                          <path
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                            strokeWidth='2'
+                            d='M5 13l4 4L19 7'
+                          ></path>
+                        </svg>
+                        <span className='pl-2'>Add to project</span>
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}

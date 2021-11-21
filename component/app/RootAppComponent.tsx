@@ -33,8 +33,7 @@ import { classNames } from '../../helpers/CSS';
 import { useProjectHandler } from '../../handler/ProjectHandler';
 
 const navigation = [
-  { name: 'My projects', href: '/app', icon: ViewListIcon, current: false },
-  { name: 'Recent', href: '#', icon: ClockIcon, current: false }
+  { name: 'My projects', href: '/app', icon: ViewListIcon, current: false }
 ];
 
 interface RootAppComponentParamsType {

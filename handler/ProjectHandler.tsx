@@ -9,12 +9,13 @@ import {
 import { useFirestoreProvider } from '../providers/FirestoreProvider';
 import { useRedirectProvider } from '../providers/RedirectProvider';
 import { useUserProvider } from '../providers/UserProvider';
+import { SourceType } from './SourceHandler';
 
 interface ProjectType {
   id: string;
   owner: string;
   name: string;
-  sources: any[];
+  sources: SourceType[];
 }
 
 interface ProjectHandlerContextType {
