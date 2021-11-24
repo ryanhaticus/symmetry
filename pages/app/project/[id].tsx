@@ -1,11 +1,11 @@
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/dist/client/router';
 import { useEffect, useState } from 'react';
-import RootAppComponent from '../../../component/app/RootAppComponent';
-import SearchTabComponent from '../../../component/app/tabs/SearchTabComponent';
-import SourceTabComponent from '../../../component/app/tabs/SourceTabComponent';
-import LoadingComponent from '../../../component/misc/LoadingComponent';
-import { useProjectHandler } from '../../../handler/ProjectHandler';
+import RootAppComponent from '../../../components/app/RootAppComponent';
+import SearchTabComponent from '../../../components/app/tabs/SearchTabComponent';
+import SourceTabComponent from '../../../components/app/tabs/SourceTabComponent';
+import LoadingComponent from '../../../components/misc/LoadingComponent';
+import { useProjectHandler } from '../../../handlers/ProjectHandler';
 import { classNames } from '../../../helpers/CSS';
 import { useRedirectProvider } from '../../../providers/RedirectProvider';
 

@@ -10,7 +10,7 @@ import {
 } from 'firebase/auth';
 import { useAuthProvider } from './AuthProvider';
 import { useRedirectProvider } from './RedirectProvider';
-import LoadingComponent from '../component/misc/LoadingComponent';
+import LoadingComponent from '../components/misc/LoadingComponent';
 
 interface UserContextType {
   createUser: (email: string, password: string) => Promise<void>;

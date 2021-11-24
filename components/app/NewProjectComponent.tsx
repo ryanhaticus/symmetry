@@ -5,7 +5,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useSharedStateProvider } from '../../providers/SharedStateProvider';
 import FormErrorComponent from '../misc/FormErrorComponent';
-import { useProjectHandler } from '../../handler/ProjectHandler';
+import { useProjectHandler } from '../../handlers/ProjectHandler';
 
 interface NewProjectComponentParamsType {
   modalOnly: boolean;

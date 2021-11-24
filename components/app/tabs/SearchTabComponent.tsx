@@ -4,12 +4,12 @@ import {
   ArrowNarrowRightIcon
 } from '@heroicons/react/solid';
 import { useEffect, useState } from 'react';
-import { useProjectHandler } from '../../../handler/ProjectHandler';
+import { useProjectHandler } from '../../../handlers/ProjectHandler';
 import {
   SearchResult,
   useSearchProvider
-} from '../../../handler/SearchHandler';
-import { useSourceHandler } from '../../../handler/SourceHandler';
+} from '../../../handlers/SearchHandler';
+import { useSourceHandler } from '../../../handlers/SourceHandler';
 import { classNames } from '../../../helpers/CSS';
 import ContentBonesComponent from '../../misc/ContentBonesComponent';
 import FormErrorComponent from '../../misc/FormErrorComponent';

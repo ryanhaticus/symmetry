@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { FirebaseApp, initializeApp } from 'firebase/app';
-import LoadingComponent from '../component/misc/LoadingComponent';
+import LoadingComponent from '../components/misc/LoadingComponent';
 
 const FirebaseContext = createContext<FirebaseApp>(null);
 

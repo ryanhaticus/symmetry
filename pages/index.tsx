@@ -1,6 +1,6 @@
 import { NextSeo } from 'next-seo';
-import HeroComponent from '../component/index/HeroComponent';
-import StatsComponent from '../component/index/StatsComponent';
+import HeroComponent from '../components/index/HeroComponent';
+import StatsComponent from '../components/index/StatsComponent';
 
 const IndexPage = () => {
   return (

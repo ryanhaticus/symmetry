@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo';
-import NewProjectComponent from '../../component/app/NewProjectComponent';
-import RootAppComponent from '../../component/app/RootAppComponent';
-import { useProjectHandler } from '../../handler/ProjectHandler';
+import NewProjectComponent from '../../components/app/NewProjectComponent';
+import RootAppComponent from '../../components/app/RootAppComponent';
+import { useProjectHandler } from '../../handlers/ProjectHandler';
 import Link from 'next/link';
 
 const AppIndexPage = () => {

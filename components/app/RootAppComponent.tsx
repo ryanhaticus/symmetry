@@ -30,7 +30,7 @@ import { useSharedStateProvider } from '../../providers/SharedStateProvider';
 import LoadingComponent from '../misc/LoadingComponent';
 import { useRedirectProvider } from '../../providers/RedirectProvider';
 import { classNames } from '../../helpers/CSS';
-import { useProjectHandler } from '../../handler/ProjectHandler';
+import { useProjectHandler } from '../../handlers/ProjectHandler';
 
 const navigation = [
   { name: 'My projects', href: '/app', icon: ViewListIcon, current: false }

@@ -10,7 +10,7 @@ import UserProvider from '../providers/UserProvider';
 import SharedStateProvider from '../providers/SharedStateProvider';
 import FirestoreProvider from '../providers/FirestoreProvider';
 import { useRouter } from 'next/dist/client/router';
-import MasterHandler from '../handler/MasterHandler';
+import MasterHandler from '../handlers/MasterHandler';
 
 const App = ({ Component, pageProps }) => {
   const router = useRouter();

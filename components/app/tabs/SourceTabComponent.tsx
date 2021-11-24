@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useCommentHandler } from '../../../handler/CommentHandler';
-import { useProjectHandler } from '../../../handler/ProjectHandler';
-import { useSourceHandler } from '../../../handler/SourceHandler';
+import { useCommentHandler } from '../../../handlers/CommentHandler';
+import { useProjectHandler } from '../../../handlers/ProjectHandler';
+import { useSourceHandler } from '../../../handlers/SourceHandler';
 
 const SourceTabComponent = () => {
   const { activeProject } = useProjectHandler();

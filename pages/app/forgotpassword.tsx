@@ -1,8 +1,8 @@
 import { NextSeo } from 'next-seo';
-import LogoComponent from '../../component/misc/LogoComponent';
+import LogoComponent from '../../components/misc/LogoComponent';
 import Link from 'next/link';
 import { useState } from 'react';
-import FormErrorComponent from '../../component/misc/FormErrorComponent';
+import FormErrorComponent from '../../components/misc/FormErrorComponent';
 import { useUserProvider } from '../../providers/UserProvider';
 import { useRedirectProvider } from '../../providers/RedirectProvider';
 

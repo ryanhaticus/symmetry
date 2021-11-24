@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import LoadingComponent from '../component/misc/LoadingComponent';
+import LoadingComponent from '../components/misc/LoadingComponent';
 
 import { Auth, getAuth } from 'firebase/auth';
 

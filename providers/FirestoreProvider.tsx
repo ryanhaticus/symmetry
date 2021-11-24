@@ -13,7 +13,7 @@ import {
   deleteDoc
 } from 'firebase/firestore';
 import { useFirebaseProvider } from './FirebaseProvider';
-import LoadingComponent from '../component/misc/LoadingComponent';
+import LoadingComponent from '../components/misc/LoadingComponent';
 
 interface FirestoreContextType {
   setDoc: (path: string, data: any) => Promise<void>;

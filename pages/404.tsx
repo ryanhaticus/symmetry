@@ -1,4 +1,4 @@
-import LogoComponent from '../component/misc/LogoComponent';
+import LogoComponent from '../components/misc/LogoComponent';
 import Link from 'next/link';
 
 /* This example requires Tailwind CSS v2.0+ */
