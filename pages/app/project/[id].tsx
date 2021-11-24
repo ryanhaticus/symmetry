@@ -3,6 +3,7 @@ import { useRouter } from 'next/dist/client/router';
 import { useEffect, useState } from 'react';
 import RootAppComponent from '../../../component/app/RootAppComponent';
 import SearchTabComponent from '../../../component/app/tabs/SearchTabComponent';
+import SourceTabComponent from '../../../component/app/tabs/SourceTabComponent';
 import LoadingComponent from '../../../component/misc/LoadingComponent';
 import { useProjectHandler } from '../../../handler/ProjectHandler';
 import { classNames } from '../../../helpers/CSS';
@@ -70,9 +71,9 @@ const AppIndexPage = () => {
                 </div>
               </div>
             </div>
-            <div className='flex flex-col flex-grow mt-2 sm:mt-4'>
+            <div className='flex flex-col flex-grow my-2 sm:my-4'>
               {tab == 'Search' && <SearchTabComponent />}
-              {tab == 'Sources' && <>Sources</>}
+              {tab == 'Sources' && <SourceTabComponent />}
             </div>
           </>
         )}

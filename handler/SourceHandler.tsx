@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
 import { useFirestoreProvider } from '../providers/FirestoreProvider';
+import { CommentType } from './CommentHandler';
 import { useProjectHandler } from './ProjectHandler';
 
 interface SourceHandlerContextType {
@@ -13,6 +14,7 @@ export interface SourceType {
   label: string;
   description: string;
   href: string;
+  comments?: CommentType[];
 }
 
 const SourceHandler = ({ children }) => {
@@ -25,8 +27,12 @@ const SourceHandler = ({ children }) => {
     if (sourceExists) {
       return;
     }
+    const modifiedSource = {
+      ...source,
+      comments: []
+    };
     const modifiedProject = { ...activeProject };
-    modifiedProject.sources.push(source);
+    modifiedProject.sources.push(modifiedSource);
     setDummyActiveProject(modifiedProject);
     await setDoc(`projects/${activeProject.id}`, modifiedProject);
   };

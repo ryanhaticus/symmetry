@@ -23,7 +23,7 @@ const UserContext = createContext<UserContextType>(null);
 
 const UserProvider = ({ children }) => {
   const authProvider = useAuthProvider();
-  const { redirect, route } = useRedirectProvider();
+  const { redirect, route, reload } = useRedirectProvider();
 
   const createUser = async (email: string, password: string) => {
     await createUserWithEmailAndPassword(authProvider, email, password);
@@ -42,8 +42,8 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = useState<User>(null);
   const [awaitingUser, setAwaitingUser] = useState(true);
   useEffect(() => {
-    authProvider.onAuthStateChanged((user) => {
-      setUser(user);
+    authProvider.onAuthStateChanged((_user) => {
+      setUser(_user);
       setAwaitingUser(false);
     });
   }, []);

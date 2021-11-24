@@ -32,19 +32,14 @@ const settings = [
 
 const SearchTabComponent = () => {
   const [radioSelection, setRadioSelection] = useState(null);
-  const {
-    searched,
-    searching,
-    setOriginPreference,
-    searchError,
-    search,
-    setTopicSearchTerm,
-    setSearched
-  } = useSearchProvider();
+  const { searched, searching, searchError, search, setSearched } =
+    useSearchProvider();
   const { addSource, removeSource } = useSourceHandler();
   const { activeProject } = useProjectHandler();
   const [page, setPage] = useState(0);
   const [maxPages, setMaxPages] = useState(1);
+  const [topicSearchTerm, setTopicSearchTerm] = useState<string>('');
+  const [originPreference, setOriginPreference] = useState<string>('');
   useEffect(() => {
     let _showing: SearchResult[] = [];
     let maxPages = Math.ceil(searched.length / 10);
@@ -62,7 +57,7 @@ const SearchTabComponent = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              search();
+              search(originPreference, topicSearchTerm);
             }}
             action='#'
             method='POST'
@@ -333,7 +328,7 @@ const SearchTabComponent = () => {
               </div>
             ))}
           </div>
-          <nav className='my-4 border-t border-gray-200 px-4 flex items-center justify-between sm:px-0'>
+          <nav className='mt-4 border-t border-gray-200 px-4 flex items-center justify-between sm:px-0'>
             <div className='-mt-px w-0 flex-1 flex'>
               {page > 0 && (
                 <button

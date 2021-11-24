@@ -19,20 +19,15 @@ export interface SearchResult {
 interface SearchHandlerContextType {
   searched: SearchResult[];
   searching: boolean;
-  originPreference: string;
-  setOriginPreference: Dispatch<SetStateAction<string>>;
   searchError: string[];
-  search: () => Promise<void>;
-  setTopicSearchTerm: Dispatch<SetStateAction<string>>;
+  search: (originPreference: string, topicSearchTerm: string) => Promise<void>;
   setSearched: Dispatch<SetStateAction<SearchResult[]>>;
 }
 
 const SearchHandler = ({ children }) => {
   const [searched, setSearched] = useState<SearchResult[]>([]);
   const [searching, setSearching] = useState(false);
-  const [originPreference, setOriginPreference] = useState<string>('');
   const [searchError, setSearchError] = useState<string[]>([]);
-  const [topicSearchTerm, setTopicSearchTerm] = useState<string>('');
   const { activeProject } = useProjectHandler();
   useEffect(() => {
     if (activeProject == null) {
@@ -44,7 +39,7 @@ const SearchHandler = ({ children }) => {
   useEffect(() => {
     setSearchError([]);
   }, [activeProject]);
-  const search = async () => {
+  const search = async (originPreference: string, topicSearchTerm: string) => {
     if (originPreference === '') {
       setSearchError(['Please select an origin preference.']);
       return;
@@ -74,11 +69,8 @@ const SearchHandler = ({ children }) => {
       value={{
         searched,
         searching,
-        originPreference,
-        setOriginPreference,
         searchError,
         search,
-        setTopicSearchTerm,
         setSearched
       }}
     >

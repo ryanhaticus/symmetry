@@ -6,6 +6,7 @@ import {
   useEffect,
   useState
 } from 'react';
+import { uuidv4 } from '../helpers/TS';
 import { useFirestoreProvider } from '../providers/FirestoreProvider';
 import { useRedirectProvider } from '../providers/RedirectProvider';
 import { useUserProvider } from '../providers/UserProvider';
@@ -28,15 +29,6 @@ interface ProjectHandlerContextType {
 }
 
 const ProjectHandlerContext = createContext<ProjectHandlerContextType>(null);
-
-const generateId = (): string => {
-  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  let id = '';
-  for (let i = 0; i < 12; i++) {
-    id += chars[Math.floor(Math.random() * chars.length)];
-  }
-  return id;
-};
 
 const ProjectHandler = ({ children }) => {
   const { setDoc, getDocs, deleteDoc } = useFirestoreProvider();
@@ -67,7 +59,7 @@ const ProjectHandler = ({ children }) => {
     );
   }, [dummyActiveProject, projects]);
   const newProject = async (name: string) => {
-    const id = generateId();
+    const id = uuidv4();
     const newProjectData = {
       id,
       owner: user.uid,
