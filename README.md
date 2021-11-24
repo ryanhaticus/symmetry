@@ -1,3 +1,5 @@
+**Notice: This project does not have a license. In other words, it is strictly for viewing purposes. As it stands, you may in no way modify or redestribute the code that falls in this repository. Thank you!**
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
