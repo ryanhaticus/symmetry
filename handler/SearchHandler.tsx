@@ -10,7 +10,7 @@ import { useProjectHandler } from './ProjectHandler';
 
 const SearchContext = createContext(null);
 
-interface SearchResult {
+export interface SearchResult {
   label: string;
   description: string;
   href: string;
@@ -41,6 +41,9 @@ const SearchHandler = ({ children }) => {
       setSearching(false);
     }
   }, [activeProject]);
+  useEffect(() => {
+    setSearchError([]);
+  }, [activeProject]);
   const search = async () => {
     if (originPreference === '') {
       setSearchError(['Please select an origin preference.']);
@@ -58,6 +61,7 @@ const SearchHandler = ({ children }) => {
     );
     try {
       const { results } = await fetchResults.json();
+      setSearchError([]);
       setSearched(results);
       setSearching(false);
     } catch {

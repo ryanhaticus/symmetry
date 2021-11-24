@@ -1,6 +1,13 @@
 import { createContext, useContext } from 'react';
+import { useFirestoreProvider } from '../providers/FirestoreProvider';
+import { useProjectHandler } from './ProjectHandler';
 
-const SourceContext = createContext(null);
+interface SourceHandlerContextType {
+  addSource: (source: SourceType) => void;
+  removeSource: (href: string) => void;
+}
+
+const SourceContext = createContext<SourceHandlerContextType>(null);
 
 export interface SourceType {
   label: string;
@@ -9,11 +16,36 @@ export interface SourceType {
 }
 
 const SourceHandler = ({ children }) => {
+  const { activeProject, setDummyActiveProject } = useProjectHandler();
+  const { setDoc } = useFirestoreProvider();
+  const addSource = async (source: SourceType) => {
+    const sourceExists = activeProject.sources.find(
+      (s) => s.href === source.href
+    );
+    if (sourceExists) {
+      return;
+    }
+    const modifiedProject = { ...activeProject };
+    modifiedProject.sources.push(source);
+    setDummyActiveProject(modifiedProject);
+    await setDoc(`projects/${activeProject.id}`, modifiedProject);
+  };
+  const removeSource = async (href: string) => {
+    const modifiedProject = { ...activeProject };
+    modifiedProject.sources = modifiedProject.sources.filter(
+      (s) => s.href !== href
+    );
+    setDummyActiveProject(modifiedProject);
+    await setDoc(`projects/${activeProject.id}`, modifiedProject);
+  };
   return (
-    <SourceContext.Provider value={null}>{children}</SourceContext.Provider>
+    <SourceContext.Provider value={{ addSource, removeSource }}>
+      {children}
+    </SourceContext.Provider>
   );
 };
 
 export default SourceHandler;
 
-export const useSourceProvider = () => useContext(SourceContext);
+export const useSourceHandler = () =>
+  useContext<SourceHandlerContextType>(SourceContext);

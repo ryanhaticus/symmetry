@@ -1,7 +1,15 @@
 import { RadioGroup } from '@headlessui/react';
-import { useState } from 'react';
+import {
+  ArrowNarrowLeftIcon,
+  ArrowNarrowRightIcon
+} from '@heroicons/react/solid';
+import { useEffect, useState } from 'react';
 import { useProjectHandler } from '../../../handler/ProjectHandler';
-import { useSearchProvider } from '../../../handler/SearchHandler';
+import {
+  SearchResult,
+  useSearchProvider
+} from '../../../handler/SearchHandler';
+import { useSourceHandler } from '../../../handler/SourceHandler';
 import { classNames } from '../../../helpers/CSS';
 import ContentBonesComponent from '../../misc/ContentBonesComponent';
 import FormErrorComponent from '../../misc/FormErrorComponent';
@@ -33,7 +41,20 @@ const SearchTabComponent = () => {
     setTopicSearchTerm,
     setSearched
   } = useSearchProvider();
+  const { addSource, removeSource } = useSourceHandler();
   const { activeProject } = useProjectHandler();
+  const [page, setPage] = useState(0);
+  const [maxPages, setMaxPages] = useState(1);
+  useEffect(() => {
+    let _showing: SearchResult[] = [];
+    let maxPages = Math.ceil(searched.length / 10);
+    setMaxPages(maxPages);
+    if (maxPages > 0) {
+      _showing = searched.slice(page * 10, (page + 1) * 10);
+    }
+    setShowing(_showing);
+  }, [searched, page]);
+  const [showing, setShowing] = useState<SearchResult[]>([]);
   return (
     <>
       {searched.length == 0 && !searching && (
@@ -208,8 +229,12 @@ const SearchTabComponent = () => {
               Search again
             </button>
           </div>
+          <span className='mb-2'>
+            Showing {showing.length} of {searched.length} result
+            {searched.length > 1 ? 's' : ''}.
+          </span>
           <div className='grid grid-cols-1 gap-y-2 md:gap-4 md:grid-cols-2'>
-            {searched.map((search) => (
+            {showing.map((search) => (
               <div
                 key={search.href}
                 className='relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500'
@@ -258,6 +283,7 @@ const SearchTabComponent = () => {
                     ) && (
                       <button
                         type='button'
+                        onClick={() => removeSource(search.href)}
                         className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
                       >
                         <svg
@@ -282,6 +308,7 @@ const SearchTabComponent = () => {
                     ) == null && (
                       <button
                         type='button'
+                        onClick={() => addSource(search)}
                         className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'
                       >
                         <svg
@@ -306,6 +333,54 @@ const SearchTabComponent = () => {
               </div>
             ))}
           </div>
+          <nav className='my-4 border-t border-gray-200 px-4 flex items-center justify-between sm:px-0'>
+            <div className='-mt-px w-0 flex-1 flex'>
+              {page > 0 && (
+                <button
+                  onClick={() => setPage(page - 1)}
+                  type='button'
+                  className='border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                >
+                  <ArrowNarrowLeftIcon
+                    className='mr-3 h-5 w-5 text-gray-400'
+                    aria-hidden='true'
+                  />
+                  Previous
+                </button>
+              )}
+            </div>
+            <div className='hidden md:-mt-px md:flex'>
+              {[...Array(maxPages)].map((_, i) => (
+                <button
+                  key={i}
+                  type='button'
+                  onClick={() => setPage(i)}
+                  className={`${
+                    i === page
+                      ? 'border-indigo-500 text-indigo-600'
+                      : 'hover:text-gray-700 hover:border-gray-300'
+                  } border-transparent text-gray-500 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </div>
+            <div className='-mt-px w-0 flex-1 flex justify-end'>
+              {page + 1 < maxPages && (
+                <button
+                  onClick={() => setPage(page + 1)}
+                  type='button'
+                  className='border-t-2 border-transparent pt-4 pl-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                >
+                  Next
+                  <ArrowNarrowRightIcon
+                    className='ml-3 h-5 w-5 text-gray-400'
+                    aria-hidden='true'
+                  />
+                </button>
+              )}
+            </div>
+          </nav>
         </>
       )}
     </>

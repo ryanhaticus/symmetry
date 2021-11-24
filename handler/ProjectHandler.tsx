@@ -22,6 +22,7 @@ interface ProjectHandlerContextType {
   newProject: (name: string) => Promise<void>;
   projects: ProjectType[];
   setActiveProject: Dispatch<SetStateAction<string>>;
+  setDummyActiveProject: Dispatch<SetStateAction<ProjectType>>;
   activeProject: ProjectType;
   deleteProject: (id: string) => Promise<void>;
 }
@@ -87,6 +88,7 @@ const ProjectHandler = ({ children }) => {
       value={{
         newProject,
         projects,
+        setDummyActiveProject,
         setActiveProject,
         activeProject,
         deleteProject
