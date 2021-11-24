@@ -86,7 +86,7 @@ const SourceTabComponent = () => {
                       key={comment.id}
                       className='border bg-white overflow-hidden shadow rounded-lg'
                     >
-                      <div className='px-4 py-4 sm:p-6'>
+                      <div className='py-4'>
                         <div className='bg-white px-4 sm:px-6'>
                           <div className='-ml-4 -mt-4 flex justify-between items-center flex-wrap lg:flex-nowrap'>
                             <div className='ml-4 mt-4'>
@@ -146,7 +146,7 @@ const SourceTabComponent = () => {
                   action='#'
                   className='relative'
                 >
-                  <div className='border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500'>
+                  <div className='px-3 border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500'>
                     <label htmlFor='title' className='sr-only'>
                       Title
                     </label>

@@ -23,8 +23,8 @@ import { useRedirectProvider } from '../../providers/RedirectProvider';
   ```
 */
 const SigninPage = () => {
-  const [email, setEmail] = useState<string>('haticus@haticus.com');
-  const [password, setPassword] = useState<string>('haticus');
+  const [email, setEmail] = useState<string>();
+  const [password, setPassword] = useState<string>();
   const [error, setError] = useState<string[]>([]);
   const { signInUser, signInWithGoogle } = useUserProvider();
   const { redirect } = useRedirectProvider();
@@ -135,7 +135,6 @@ const SigninPage = () => {
                         id='email'
                         name='email'
                         type='email'
-                        value='haticus@haticus.com'
                         autoComplete='email'
                         required={true}
                         onChange={(e) => setEmail(e.target.value)}
@@ -156,7 +155,6 @@ const SigninPage = () => {
                         id='password'
                         name='password'
                         type='password'
-                        value='haticus'
                         autoComplete='current-password'
                         required={true}
                         onChange={(e) => setPassword(e.target.value)}

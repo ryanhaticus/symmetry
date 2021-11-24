@@ -5,7 +5,8 @@ import {
   User,
   signInWithPopup,
   GoogleAuthProvider,
-  signOut
+  signOut,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 import { useAuthProvider } from './AuthProvider';
 import { useRedirectProvider } from './RedirectProvider';
@@ -16,6 +17,7 @@ interface UserContextType {
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
   signInUser: (email: string, password: string) => Promise<void>;
+  sendPasswordReset: (email: string) => Promise<void>;
   user: User;
 }
 
@@ -31,6 +33,9 @@ const UserProvider = ({ children }) => {
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(authProvider, provider);
+  };
+  const sendPasswordReset = async (email: string) => {
+    await sendPasswordResetEmail(authProvider, email);
   };
   const _signOut = async () => {
     await signOut(authProvider);
@@ -57,6 +62,7 @@ const UserProvider = ({ children }) => {
         signInWithGoogle,
         signOut: _signOut,
         signInUser,
+        sendPasswordReset,
         user
       }}
     >
